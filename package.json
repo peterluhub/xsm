@@ -1,0 +1,41 @@
+{
+  "name": "XSM",
+  "version": "1.0.0",
+  "description": "XSM - State Management made eXtraordinarily simple for React, Vue, and Angular"
+  "scripts": {
+    "build-dev": "webpack -w -d",
+    "build-prod": "webpack -p",
+    "test": "jest .",
+    "test-dev": "jest --verbose --watch ./ "
+  },
+  "keywords": [
+    "XSM",
+    "State Management",
+    "javascript",
+    "ES6",
+    "React",
+    "Vue",
+    "Angular",
+    "Redux",
+    "Vuex",
+    "MobX",
+    "RXJS",
+    "NGRX",
+    "Store"
+  ],
+  "author": "Peter Lu",
+  "license": "MIT",
+  "homepage": "https://github.com/peterluhub/xsm",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/peterluhub/xsm.git"
+  },
+  "devDependencies": {
+    "webpack": "4.29.2",
+    "webpack-cli": "3.2.3",
+    "@babel/core": "7.2.2",
+    "@babel/preset-env": "7.3.1",
+    "babel-loader": "8.0.5",
+    "jest": "^24.8.0"
+  }
+}

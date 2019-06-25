@@ -1,4 +1,4 @@
-var {reset,setcfg,bindState,get,set,setMany} = require('./usm');
+var {reset,setcfg,bindState,get,set,setMany} = require('./xsm');
 
 class T2 {
     constructor() {

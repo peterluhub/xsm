@@ -1,6 +1,6 @@
 <h1 align="center">Welcome to XSM 👋</h1>
 <p>
-  <img src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
+  <img src="https://img.shields.io/badge/version-1.0.1-blue.svg?cacheSeconds=2592000" />
   <a href="https://github.com/peterluhub/usm/blob/master/LICENSE">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" target="_blank" />
   </a>
@@ -10,11 +10,14 @@
 
 ### 🏠 [Homepage](https://github.com/peterluhub/usm)
 
+### Demos
+[Angular](https://codesandbox.io/s/angular-xsm-demo-1j9j0)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [React](https://codesandbox.io/s/xsm-react-3v3fg)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [Vue](https://codesandbox.io/s/vuexsmdemo-2152h)
+
 ### Highlights
 
   - Incrediblly easy to use, developer friedly and minimum learning curve
   - Reactive, nonintrusive
-  - Automatic state data removal, efficient memory management
+  - Automatic re-renderinga and state data removal, efficient memory management
   - Small size for fast download
   - Super simple async handling
   - Same API for React, Vue, and Angular
@@ -30,9 +33,9 @@ npm install xsm
 
 1. Tell XSM which framework to use
 
-```javascript
-setcfg({'framework': 'React'})
-```
+  ```javascript
+  setcfg({'framework': 'React'})
+  ```
 
 2. Bind the component state to XSM
 
@@ -89,8 +92,8 @@ To answer why, let's start by answering another question, what is XSM?.  It cons
 ```javascript
  setcfg(
     {framework: frameworkValue, 
-     bindings: {ComponetName: {key1: value1,...},
-             ComponetName1: {key1: value1,...},
+     bindings: {ComponentName: {key1: value1,...},
+             ComponentName1: {key1: value1,...},
             ...},
      debug: true/false,
      trace: true/false
@@ -98,15 +101,15 @@ To answer why, let's start by answering another question, what is XSM?.  It cons
  )
 ```
 - frameworkValue: React, Vue, or Angular
-- ComponetName: It is the classe name for React and Angular.  It is the registered component name for Vue
+- ComponentName: It is the classe name for React and Angular.  It is the registered component name for Vue
   bindings: It serves two purposes.  One is to bind the state of each component to the store and you don't need to binState in this case.  Another is to tell XSM that which piece of data is shared by more than one components and the shared data will not be deleted even if the the components are unmounted.
 
 ## User Guide
 
 To use XSM to manage you app state, here are the steps to follow:
 
-1. Use *setcfg* to bind XSM to a framework.  Currently, XSM supports Angular, Reatc, and Vue.
-2. Bind the component state to the store with *bindState* to enble the auto re-rendering when the state is updated.  The value of each bound key can be accessed in the component with *this.keyname*.  For example, you want to bind a key and value pair of {title: 'XSM'} to a component,
+- Use *setcfg* to bind XSM to a framework.  Currently, XSM supports Angular, Reatc, and Vue.
+- Bind the component state to the store with *bindState* to enble the auto re-rendering when the state is updated.  The value of each bound key can be accessed in the component with *this.keyname*.  For example, you want to bind a key and value pair of {title: 'XSM'} to a component,
 - For Angular and React, it is done in the constructor.
 ```javascript
 constructor() {
@@ -121,8 +124,9 @@ created() {
 }
 ```
 
-3. When it's time to update the state, use *set* where your state data is available whether it's in the await function, promise.then callback, or just plain old callback. XSM does not get in the way.
+- When it's time to update the state, use *set* when and where your state data is available whether it's in the await function, promise.then callback, or just plain old callback. XSM does not get in the way.
 
+- Besides the demos, you can find more code examples in [this repository](https://github.com/peterluhub/xsm-code-examples).  A realworld example using XSM with React is forthcoming.  So, stay tuned.
 
 ## Author
 

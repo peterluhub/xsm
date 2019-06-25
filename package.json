@@ -1,7 +1,8 @@
 {
-  "name": "XSM",
-  "version": "1.0.0",
-  "description": "XSM - State Management made eXtraordinarily simple for React, Vue, and Angular"
+  "name": "xsm",
+  "version": "1.0.1",
+  "description": "XSM - State Management made eXtraordinarily simple for React, Vue, and Angular",
+  "main": "xsm.js",
   "scripts": {
     "build-dev": "webpack -w -d",
     "build-prod": "webpack -p",

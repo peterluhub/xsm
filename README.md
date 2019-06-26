@@ -101,7 +101,7 @@ To answer why, let's start by answering another question, what is XSM?.  It cons
  )
 ```
 - frameworkValue: React, Vue, or Angular
-- ComponentName: It is the classe name for React and Angular.  It is the registered component name for Vue
+- ComponentName: It is the class name for React and Angular.  It is the registered component name for Vue
   bindings: It serves two purposes.  One is to bind the state of each component to the store and you don't need to binState in this case.  Another is to tell XSM that which piece of data is shared by more than one components and the shared data will not be deleted even if the the components are unmounted.
 
 ## User Guide

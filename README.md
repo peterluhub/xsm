@@ -1,6 +1,11 @@
 <h1 align="center">Welcome to XSM 👋</h1>
 <p>
-  <img src="https://img.shields.io/badge/version-1.0.6-blue.svg?cacheSeconds=2592000" />
+  <a href="https://www.npmjs.com/package/xsm">
+    <img src="https://img.shields.io/npm/v/xsm.svg" alt="npm version">
+  </a>
+  <a href="https://packagephobia.now.sh/result?p=xsm">
+    <img src="https://packagephobia.now.sh/badge?p=xsm" alt="install size">
+  </a>
   <a href="https://github.com/peterluhub/usm/blob/master/LICENSE">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" target="_blank" />
   </a>
@@ -64,7 +69,7 @@ Both debug and trace can be selectively turn on and off at any point
 
 ### Why XSM?
 
-To answer why, let's start by answering another question, what is XSM?.  It consists a global store and the machinary to re-render the component when the state is updated.  The store is just a javascript object with key and value pairs.  By binding the instance reference, *this*, to the store, each component can react to the changes of the store whether it is re-render or unmount.  It is really *this* simple, no need to use HOC, provider, reducer, decorator, observer, action, dispatcher, etc.  Hence, all the three most popular framewokrs work the same way in XSM and that's why we can keep the code size very small and support the three frameworks without framework specific modules.  On top of that, XSM is performant according to Stefan Krause's [js-framework-benchmark](https://github.com/krausest/js-framework-benchmark).  It outperforms Redux and MobX with React and Vuex with Vue.
+To answer why, let's start by answering another question, what is XSM?  It consists of a global store and the machinary to re-render the component when the state is updated.  The store is just a javascript object with key and value pairs.  By binding the instance reference, *this*, to the store, each component can react to the changes of the store whether it is re-render or unmount.  It is really *this* simple, no need to use HOC, provider, reducer, decorator, observer, action, dispatcher, etc.  Hence, all the three most popular framewokrs work the same way in XSM and that's why we can keep the code size very small and support the three frameworks without framework specific modules.  On top of that, XSM is performant according to Stefan Krause's [js-framework-benchmark](https://github.com/krausest/js-framework-benchmark).  It outperforms Redux and MobX with React and Vuex with Vue.
 
 ### API
 

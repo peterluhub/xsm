@@ -125,12 +125,6 @@ export function bindState(self, opt) {
     let frameworkcb =  fwsetstate(self);
     Object.keys(map).forEach(key => {
         fwinitstate(self, key, map[key]);
-        /*
-        statecb = (key, val) => {
-            return frameworkcb(key, val);
-        }
-        id = addsub(key, statecb);
-        */
         id = addsub(key, frameworkcb);
         ref[key] = id;
     });

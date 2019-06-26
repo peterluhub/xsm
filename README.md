@@ -1,6 +1,6 @@
 <h1 align="center">Welcome to XSM 👋</h1>
 <p>
-  <img src="https://img.shields.io/badge/version-1.0.1-blue.svg?cacheSeconds=2592000" />
+  <img src="https://img.shields.io/badge/version-1.0.5-blue.svg?cacheSeconds=2592000" />
   <a href="https://github.com/peterluhub/usm/blob/master/LICENSE">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" target="_blank" />
   </a>
@@ -17,7 +17,7 @@
 
   - Incrediblly easy to use, developer friedly and minimum learning curve
   - Reactive, nonintrusive
-  - Automatic re-renderinga and state data removal, efficient memory management
+  - Automatic re-rendering and state data removal, efficient memory management
   - Small size for fast download
   - Super simple async handling
   - Same API for React, Vue, and Angular
@@ -31,23 +31,23 @@ npm install xsm
 
 ##### Usage in Brief
 
-1. Tell XSM which framework to use
+- Tell XSM which framework to use
 
   ```javascript
   setcfg({'framework': 'React'})
   ```
 
-2. Bind the component state to XSM
+- Bind the component state to XSM
 
-```javascript
-bindState(this, {key: val, key2: val2, ...})
-```
+  ```javascript
+  bindState(this, {key: val, key2: val2, ...})
+  ```
 
-3. When you are ready to update the state(sync or async)
+- When you are ready to update the state(sync or async)
 
-```javascript
-set('key', val)
-```
+  ```javascript
+  set('key', val)
+  ```
 
 Component will be re-rendered automatically.
 
@@ -55,12 +55,12 @@ Component will be re-rendered automatically.
 
 Both debug and trace can be selectively turn on and off at any point
 
-```javascript
-setcfg({debug: true})  //debug on
-setcfg({debug: false}) //debug off
-setcfg({trace: true})  //trace on
-setcfg({trace: false}) //trace off
-```
+  ```javascript
+  setcfg({debug: true})  //debug on
+  setcfg({debug: false}) //debug off
+  setcfg({trace: true})  //trace on
+  setcfg({trace: false}) //trace off
+  ```
 
 ### Why XSM?
 
@@ -111,22 +111,22 @@ To use XSM to manage you app state, here are the steps to follow:
 - Use *setcfg* to bind XSM to a framework.  Currently, XSM supports Angular, Reatc, and Vue.
 - Bind the component state to the store with *bindState* to enble the auto re-rendering when the state is updated.  The value of each bound key can be accessed in the component with *this.keyname*.  For example, you want to bind a key and value pair of {title: 'XSM'} to a component,
 - For Angular and React, it is done in the constructor.
-```javascript
-constructor() {
-    super()
-    bindState(this, {title: 'XSM'})
-}
-```
+  ```javascript
+  constructor() {
+      super()
+      bindState(this, {title: 'XSM'})
+  }
+  ```
 - For Vue, it can be done in the *created* life cycle hook.
-```javascript
-created() {
-    bindState(this, {title: 'XSM'})
-}
-```
+  ```javascript
+  created() {
+      bindState(this, {title: 'XSM'})
+  }
+  ```
 
 - When it's time to update the state, use *set* when and where your state data is available whether it's in the await function, promise.then callback, or just plain old callback. XSM does not get in the way.
 
-- Besides the demos, you can find more code examples in [this repository](https://github.com/peterluhub/xsm-code-examples).  A realworld example using XSM with React is forthcoming.  So, stay tuned.
+- Besides the demos, you can find more code examples in [this repository](https://github.com/peterluhub/xsm-code-examples).  A realworld example(implementing the [Realworld Example Specs](https://github.com/gothinkster/realworld) using XSM with React is forthcoming.  So, stay tuned.
 
 ## Author
 

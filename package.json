@@ -4,8 +4,6 @@
   "description": "XSM - State Management made eXtraordinarily simple for React, Vue, and Angular",
   "main": "xsm.js",
   "scripts": {
-    "build-dev": "webpack -w -d",
-    "build-prod": "webpack -p",
     "test": "jest .",
     "test-dev": "jest --verbose --watch ./ "
   },
@@ -32,11 +30,12 @@
     "url": "https://github.com/peterluhub/xsm.git"
   },
   "devDependencies": {
-    "webpack": "4.29.2",
-    "webpack-cli": "3.2.3",
     "@babel/core": "7.2.2",
     "@babel/preset-env": "7.3.1",
     "babel-loader": "8.0.5",
-    "jest": "^24.8.0"
-  }
+    "jest": "^24.8.0",
+    "webpack": "4.29.2",
+    "webpack-cli": "3.2.3"
+  },
+  "dependencies": {}
 }

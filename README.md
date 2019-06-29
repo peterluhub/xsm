@@ -11,7 +11,7 @@
   </a>
 </p>
 
-> XSM - State Management made eXtraordinarily simple for React, Vue, and Angular
+> XSM - State Management made eXtraordinarily simple and effective for Angular, React, and Vue
 
 ### 🏠 [Homepage](https://github.com/peterluhub/usm)
 
@@ -25,7 +25,7 @@
   - Automatic re-rendering and state data removal, efficient memory management
   - Small size for fast download
   - Super simple async handling
-  - Same API for React, Vue, and Angular
+  - Same API for Angular, React, and Vue 
 
 ### How-to's
 
@@ -105,7 +105,7 @@ To answer why, let's start by answering another question, what is XSM?  It consi
     }
  )
 ```
-- frameworkValue: React, Vue, or Angular
+- frameworkValue: Angular, React, or Vue
 - ComponentName: It is the class name for React and Angular.  It is the registered component name for Vue
   bindings: It serves two purposes.  One is to bind the state of each component to the store and you don't need to binState in this case.  Another is to tell XSM that which piece of data is shared by more than one components and the shared data will not be deleted even if the the components are unmounted.
 

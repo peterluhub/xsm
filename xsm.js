@@ -17,11 +17,27 @@ function initstate(self, key, val) {
     }
 }
 
+function printinfo(self, key=null, val=null) {
+    let name
+    if( fwcname ) 
+        name = fwcname;
+    else
+        name = 'none';
+    if( debug ) {
+        console.log('cname', name, 'key', key, 'val', val, '\n store', {..._data});
+    }
+    if( trace ) {
+        console.trace('cname', name, 'key', key, 'val', val, '\n store', {..._data});
+    }
+}
+
 const frameworkcfg = {
     React: {
         umount: 'componentWillUnmount',
         setstate: self => (key, val) => {
             self[key] = val;
+            if( debug || trace )
+                printinfo(self, key, val);
             self.forceUpdate();
             return self;
         },
@@ -32,6 +48,8 @@ const frameworkcfg = {
         umount: 'destroyed',
         setstate: self => (key, val) => {
             self[key] = val;
+            if( debug || trace )
+                printinfo(self, key, val);
             return self.$forceUpdate();
         },
         initstate,
@@ -39,7 +57,11 @@ const frameworkcfg = {
     },
     Angular: {
         umount: 'ngOnDestroy',
-        setstate: self => (key, val) => self[key] = val,
+        setstate: self => (key, val) => {
+                self[key] = val;
+                if( debug || trace )
+                    printinfo(self, key, val);
+        },
         initstate,
         cname: self => self.constructor.name,
     },
@@ -47,45 +69,43 @@ const frameworkcfg = {
 
 function rmkey(key) {
     _data[key] = undefined;
-    if( trace )
-        console.trace('trace for removing key=', key, 'store', {..._data});
-    if( debug )
-        console.log('removing key=', key, 'store', {..._data});
 }
 
-function rmsub(key, id) {
-      if( (id||id===0) && sublist.has(key) && (sublist.get(key).length) > id ) {
-          sublist.get(key).splice(id, 1)
-          if( sublist.get(key).length === 0 ) {
-              sublist.delete(key)
-              rmkey(key);
-          }
-      }
+function rmsub(self, key) {
+    const cblist = sublist.get(key);
+    for(let i=0; i<cblist.length; i++) {
+        if( cblist[i].self === self ) {
+            cblist.splice(i, 1)
+            if( cblist.length === 0 ) {
+                sublist.delete(key)
+                rmkey(key);
+            }
+            return;
+        }
+    }
 }
 
-function addsub(key, cb) {
-      if( !sublist.has(key) ) sublist.set(key, []);
-      let subitem = sublist.get(key);
-      subitem.push((key,val)=>cb(key,val))
-      return subitem.length-1;
+function addsub(key, cb, self) {
+    if( !sublist.has(key) ) sublist.set(key, []);
+    let subitem = sublist.get(key);
+    subitem.push({self, cb:(key,val)=>cb(key,val)})
+    return subitem.length-1;
 }
 
 export function set(key, val) {
     let cblst = sublist.get(key);
     if(  cblst ) {
         if( cblst.length == 1 ) {
-            cblst[0](key, val);
+            cblst[0].cb(key, val);
         } else {
             for(let i=0; i<cblst.length; i++) {
-                cblst[i](key, val);
+                cblst[i].cb(key, val);
             }
         }
     }
     _data[key] = val;
-    if( debug )
-        console.log('store', {..._data});
-    if( trace )
-        console.trace('store', {..._data});
+    if( debug || trace )
+        printinfo(null, key, val);
 }
 
 export function setMany(kv) {
@@ -107,7 +127,10 @@ function rmStateBinding(self, opt) {
     else
         return;
     Object.keys(map).forEach(key => {
-        rmsub(key, rmsublist.get(self)[key]);
+        if( debug || trace )
+            printinfo(self, key, 'removing key');
+        rmsub(self, key);
+        //rmsub(self, key, rmsublist.get(self)[key]);
     });
 }
 
@@ -120,19 +143,22 @@ export function bindState(self, opt) {
     else
         return;
     let id, statecb;
+    /*
     rmsublist.set(self, {});
     const ref = rmsublist.get(self)
+    */
     let frameworkcb =  fwsetstate(self);
     Object.keys(map).forEach(key => {
         fwinitstate(self, key, map[key]);
-        id = addsub(key, frameworkcb);
-        ref[key] = id;
+        id = addsub(key, frameworkcb, self);
+        //ref[key] = id;
     });
     if( config.framework ) {
         let umount = self[fwumount]
         if( umount ) {
             umount = umount.bind(self);
             self[fwumount] = function classDestroy() {
+                
                 rmStateBinding(self, map);
                 return umount();
             };
@@ -164,7 +190,6 @@ function setSharedState(bindings) {
     let keylist = {};
     Object.keys(bindings).forEach(key => {
       const component = bindings[key];
-      addSharedState( bindings[key]);
       Object.keys(component).forEach(state => {
         if( keylist[state])
             keylist[state] += 1;
@@ -173,11 +198,12 @@ function setSharedState(bindings) {
       });
     });
     Object.keys(keylist).forEach(key => {
-        if( keylist[key]>1 )
+        if( keylist[key]>1 ) {
             sharedState[key] = true;
+        }
     });
     if( debug )
-        console.log('sharedState', sharedState);
+        printinfo(null, 'sharedState', sharedState);
 }
 
 export function setcfg(opt) {
@@ -197,6 +223,9 @@ export function setcfg(opt) {
             setSharedState(val)
         } else if( key === 'sharedBindings' ) {
             addSharedState(val)
+        } else if( key === 'trace' ) {
+            usm.trace(val)
+            trace = val;
         } else if( key === 'debug' ) {
             usm.debug(val)
             debug = val;

@@ -20,7 +20,7 @@ function initstate(self, key, val) {
 function printinfo(self, key=null, val=null) {
     let name
     if( fwcname ) 
-        name = fwcname;
+        name = fwcname(self);
     else
         name = 'none';
     if( debug ) {
@@ -218,7 +218,6 @@ export function setcfg(opt) {
             fwsetstate = frameworkcfg[val].setstate;
             fwumount = frameworkcfg[val].umount;
             fwcname = frameworkcfg[val].cname;
-            //console.log('fwinitstate', fwinitstate);
         } else if( key === 'bindings' ) {
             setSharedState(val)
         } else if( key === 'sharedBindings' ) {

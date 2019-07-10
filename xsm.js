@@ -2,7 +2,6 @@ let _data = {};
 let config = {};
 let sharedState = {};
 let sublist = new Map();
-let rmsublist = new Map();
 let debug=false;
 let trace=false;
 let fwsetstate, fwinitstate, fwumount, fwcname;
@@ -19,7 +18,7 @@ function initstate(self, key, val) {
 
 function printinfo(self, key=null, val=null) {
     let name
-    if( fwcname ) 
+    if( fwcname && self ) 
         name = fwcname(self);
     else
         name = 'none';
@@ -130,7 +129,6 @@ function rmStateBinding(self, opt) {
         if( debug || trace )
             printinfo(self, key, 'removing key');
         rmsub(self, key);
-        //rmsub(self, key, rmsublist.get(self)[key]);
     });
 }
 
@@ -143,10 +141,6 @@ export function bindState(self, opt) {
     else
         return;
     let id, statecb;
-    /*
-    rmsublist.set(self, {});
-    const ref = rmsublist.get(self)
-    */
     let frameworkcb =  fwsetstate(self);
     Object.keys(map).forEach(key => {
         fwinitstate(self, key, map[key]);

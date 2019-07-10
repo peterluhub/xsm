@@ -20,7 +20,7 @@
 
 ### Highlights
 
-  - Incrediblly easy to use, developer friedly and minimum learning curve
+  - Incredibly easy to use, developer friendly and minimum learning curve
   - Reactive, nonintrusive
   - Automatic re-rendering and state data removal, efficient memory management
   - Small size for fast download

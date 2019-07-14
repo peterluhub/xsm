@@ -22,12 +22,11 @@ function printinfo(self, key=null, val=null) {
         name = fwcname(self);
     else
         name = 'none';
-    if( debug ) {
-        console.log('cname', name, 'key', key, 'val', val, '\n store', {..._data});
-    }
+    let printfunc = console.log;
     if( trace ) {
-        console.trace('cname', name, 'key', key, 'val', val, '\n store', {..._data});
+        printfunc = console.trace;
     }
+    printfunc('cname', name, 'key', key, 'val', val, '\n store', {..._data});
 }
 
 const frameworkcfg = {
@@ -77,7 +76,8 @@ function rmsub(self, key) {
             cblist.splice(i, 1)
             if( cblist.length === 0 ) {
                 sublist.delete(key)
-                rmkey(key);
+                if( !sharedState[key] )
+                    rmkey(key);
             }
             return;
         }

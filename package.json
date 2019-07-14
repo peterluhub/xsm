@@ -1,6 +1,6 @@
 {
   "name": "xsm",
-  "version": "1.1.3",
+  "version": "1.1.5",
   "description": "XSM - State Management made eXtraordinarily simple for React, Vue, and Angular",
   "main": "xsm.js",
   "scripts": {

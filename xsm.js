@@ -200,7 +200,7 @@ function setSharedState(bindings) {
         printinfo(null, 'sharedState', sharedState);
 }
 
-export function setcfg(opt) {
+export function setup(opt) {
     if( !opt ) return;
     let val;
     Object.keys(opt).forEach(key => {
@@ -228,7 +228,10 @@ export function setcfg(opt) {
     });
 }
 
+export const setcfg = setup;
+
 const usm = {
+  setup,
   setcfg,
   set,
   get,

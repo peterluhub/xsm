@@ -1,4 +1,4 @@
-var {reset,setcfg,bindState,get,set,setMany} = require('./xsm');
+var {reset,setup,setcfg,bindState,get,set,setMany} = require('./xsm');
 
 class T2 {
     constructor() {
@@ -142,7 +142,7 @@ describe('bindState', () => {
         expect(get('state')).toStrictEqual(0)
     })
     test("binded with Vue", () => {
-        setcfg({framework: 'Vue'})
+        setup({framework: 'Vue'})
         const tst = new Test();
         expect(get('state')).toStrictEqual(0)
     })

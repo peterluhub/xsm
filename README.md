@@ -30,7 +30,7 @@
 
 ### Benchmark Results
 XSM is performant according to Stefan Krause's [js-framework-benchmark](https://github.com/krausest/js-framework-benchmark).  As shown below,
- ![Benchmarks](/docs/peterluhub/xsm/jfb-Interactive-Results-m.png).
+ ![Benchmarks](/docs/jfb-Interactive-Results-m.png).
 
 The code for the benchmarks is in [this repo](https://github.com/peterluhub/jfb).
 

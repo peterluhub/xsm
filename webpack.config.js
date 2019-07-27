@@ -1,6 +1,6 @@
 'use strict';
-var path = require('path')
-var webpack = require('webpack')
+var path = require('path');
+var webpack = require('webpack');
 
 var cache = {};
 var loaders = [

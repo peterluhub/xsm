@@ -21,12 +21,12 @@
 [Realworld Example App with react-xsm](https://codesandbox.io/s/realworld-example-app-with-react-xsm-xelx1)
 ### Highlights
 
-  - Incredibly easy to use, developer friendly and minimum learning curve
-  - Reactive, nonintrusive
-  - Automatic re-rendering and state data removal, efficient memory management
-  - Small size for fast download
-  - Super simple async handling
-  - Same API for Angular, React, and Vue, code reuse
+  -   Incredibly easy to use, developer friendly and minimum learning curve
+  -   Reactive, nonintrusive
+  -   Automatic re-rendering and state data removal, efficient memory management
+  -   Small size for fast download
+  -   Super simple async handling
+  -   Same API for Angular, React, and Vue, code reuse
 
 ### Benchmark Results
 XSM is performant according to Stefan Krause's [js-framework-benchmark](https://github.com/krausest/js-framework-benchmark).  As shown below,
@@ -43,22 +43,22 @@ npm install xsm
 
 ##### Usage in Brief
 
-- Tell XSM which framework to use
+-   Tell XSM which framework to use
 
   ```javascript
-  setup({'framework': 'React'})
+    setup({'framework': 'React'})
   ```
 
-- Bind the component state to XSM
+-   Bind the component state to XSM
 
   ```javascript
-  bindState(this, {key: val, key2: val2, ...})
+    bindState(this, {key: val, key2: val2, ...})
   ```
 
-- When you are ready to update the state(sync or async)
+-   When you are ready to update the state(sync or async)
 
   ```javascript
-  set('key', val)
+    set('key', val)
   ```
 
 Component will be re-rendered automatically.
@@ -74,7 +74,7 @@ Both debug and trace can be selectively turn on and off at any point
   setup({trace: false}) //trace off
   ```
 
-### Why XSM?
+### Why XSM
 
 To answer why, let's start by answering another question, what is XSM?  It consists of a global store and the machinary to re-render the component when the state is updated.  The store is just a javascript object with key and value pairs.  By binding the instance reference, *this*, to the store, each component can react to the changes of the store whether it is re-render or unmount.  It is really *this* simple, no need to use HOC, provider, reducer, decorator, observer, action, dispatcher, etc.  Hence, all the three most popular frameworks work the same way in XSM and that's why we can keep the code size very small and support the three frameworks without framework specific modules.  
 
@@ -112,12 +112,11 @@ To answer why, let's start by answering another question, what is XSM?  It consi
     }
  )
 ```
-- frameworkValue: Angular, React, or Vue
-- ComponentName: It is the class name for React and Angular.  It is the registered component name for Vue
-  bindings: It serves two purposes.  One is to bind the state of each component to the store and you don't need to binState in this case.  Another is to tell XSM that which piece of data is shared by more than one components and the shared data will not be deleted even if the the components are unmounted.
+-   frameworkValue: Angular, React, or Vue
+-   ComponentName: It is the class name for React and Angular.  It is the registered component name for Vue
+-   bindings: It serves two purposes.  One is to bind the state of each component to the store and you don't need to binState in this case.  Another is to tell XSM that which piece of data is shared by more than one components and the shared data will not be deleted even if the the components are unmounted.
 
 **setcfg** - It is an alias of *setup*.
-
 
 ## User Guide
 

@@ -17,7 +17,7 @@ function initstate(self, key, val) {
 }
 
 function printinfo(self, key=null, val=null) {
-    let name
+    let name;
     if( fwcname && self ) 
         name = fwcname(self);
     else
@@ -75,7 +75,7 @@ function rmsub(self, key) {
         if( cblist[i].self === self ) {
             cblist.splice(i, 1)
             if( cblist.length === 0 ) {
-                sublist.delete(key)
+                sublist.delete(key);
                 if( !sharedState[key] )
                     rmkey(key);
             }
@@ -87,7 +87,7 @@ function rmsub(self, key) {
 function addsub(key, cb, self) {
     if( !sublist.has(key) ) sublist.set(key, []);
     let subitem = sublist.get(key);
-    subitem.push({self, cb:(key,val)=>cb(key,val)})
+    subitem.push({self, cb: (key,val) => cb(key,val)})
     return subitem.length-1;
 }
 
@@ -148,7 +148,7 @@ export function bindState(self, opt) {
         //ref[key] = id;
     });
     if( config.framework ) {
-        let umount = self[fwumount]
+        let umount = self[fwumount];
         if( umount ) {
             umount = umount.bind(self);
             self[fwumount] = function classDestroy() {
@@ -162,7 +162,7 @@ export function bindState(self, opt) {
             };
         }
     } else {
-        console.log('default framework', framework, 'umount', umount, 'self', self)
+        console.log('default framework is none');
     }
 }
 

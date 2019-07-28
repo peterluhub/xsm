@@ -1,4 +1,4 @@
-<h1 align="center">Welcome to XSM 👋</h1>
+ ![XSM](/docs/xsmlogo.png)
 <p>
   <a href="https://www.npmjs.com/package/xsm">
     <img src="https://img.shields.io/npm/v/xsm.svg" alt="npm version">

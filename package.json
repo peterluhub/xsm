@@ -1,7 +1,7 @@
 {
   "name": "xsm",
-  "version": "1.2.1",
-  "description": "XSM - State Management made eXtraordinarily simple for React, Vue, and Angular",
+  "version": "1.5.5",
+  "description": "XSM - State Management made eXtraordinarily simple for React, Vue, Angular, Svelte",
   "main": "xsm.js",
   "scripts": {
     "test": "jest .",
@@ -15,6 +15,7 @@
     "React",
     "Vue",
     "Angular",
+    "Svelte",
     "Redux",
     "Vuex",
     "MobX",

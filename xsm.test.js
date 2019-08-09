@@ -1,8 +1,18 @@
-var {reset,setup,setcfg,bindState,get,set,setMany} = require('./xsm');
+var {reset,setup,setcfg,bindState,unbindState,get,set,setMany} = require('./xsm');
 
 class T2 {
-    constructor() {
-        bindState(this, {state: 0});
+    constructor(bindings) {
+        if( !bindings ) {
+            bindState(this, {state: 0});
+        } else {
+            if( bindings != 1 ) {
+                bindState(bindings);
+            } else {
+                const self = this;
+                const binding = {'newval': val => self.newval = val};
+                bindState(binding);
+            }
+        }
     }
 
     forceUpdate() {
@@ -20,14 +30,30 @@ class T2 {
     }
     ngOnDestroy() {
         return 'Angular';
+    }
+    onMount() {
+        return this.newval;
+    }
+    onDestroy(bindings) {
+        unbindState(bindings);
     }
 }
 
 class Test {
     constructor(bindings) {
-        if( !bindings )
+        if( !bindings ) {
             bindings = {state: 0};
-        bindState(this, bindings);
+            bindState(this, bindings);
+        } else {
+            if( bindings != 1 ) {
+                bindState(bindings);
+            } else {
+                const self = this;
+                this.binding = {'newval': val => self.newval = val};
+                
+                bindState(this.binding);
+            }
+        }
     }
 
     forceUpdate() {
@@ -46,13 +72,24 @@ class Test {
     ngOnDestroy() {
         return 'Angular';
     }
+    onMount() {
+        return this.newval;
+    }
+    onDestroy(bindings) {
+        if( bindings )
+            unbindState(bindings);
+        else
+            unbindState(this.binding);
+    }
 }
 
 class T3 {
-    constructor() {
+    constructor(shouldBind) {
         this.$options = {};
         this.$options._componentTag = 'T3';
-        bindState(this)
+        if( !shouldBind) {
+            bindState(this)
+        }
     }
     forceUpdate() {
         return this.state;
@@ -73,10 +110,12 @@ class T3 {
 }
 
 class T4 {
-    constructor() {
+    constructor(shouldBind) {
         this.$options = {};
         this.$options._componentTag = 'T4';
-        bindState(this);
+        if( !shouldBind ) {
+            bindState(this);
+        }
     }
     forceUpdate() {
         return this.state;
@@ -151,6 +190,13 @@ describe('bindState', () => {
         const tst = new Test();
         expect(get('state')).toStrictEqual(0);
     })
+    test("binded with Svelte", () => {
+        setcfg({framework: 'Svelte'});
+        let state;
+        const tst = new Test({state: val => state = val});
+        set('state', 0);
+        expect(state).toStrictEqual(0);
+    })
 })
 
 describe('umountComponent', () => {
@@ -171,6 +217,15 @@ describe('umountComponent', () => {
         setcfg({framework: 'Angular'});
         const tst = new Test();
         expect(tst.ngOnDestroy()).toStrictEqual('Angular');
+    })
+    test("Svelte", () => {
+        setcfg({framework: 'Svelte'});
+        let newval;
+        const binding = {'newval': val => newval = val};
+        const tst = new Test(binding);
+        set('newval', 1);
+        tst.onDestroy(binding);
+        expect(get('newval')).toStrictEqual(undefined);
     })
 })
 
@@ -195,6 +250,15 @@ describe('changeState', () => {
         const tst = new Test();
         set('state', 'new');
         expect(tst.state).toStrictEqual('new');
+    })
+    test("Svelte", () => {
+        setcfg({framework: 'Svelte'});
+        let newval;
+        const binding = {'newval': val => newval = val};
+        const tst = new Test(binding);
+        bindState(binding);
+        set('newval', 1);
+        expect(newval).toStrictEqual(1);
     })
 })
 
@@ -225,6 +289,14 @@ describe('shareData across Components', () => {
         set('state', 'new')
         expect(tst.state).toStrictEqual('new');
         expect(t2.state).toStrictEqual('new');
+    })
+    test("Svelte", () => {
+        setcfg({framework: 'Svelte'});
+        const tst = new Test(1);
+        const t2 = new T2(1);
+        set('newval', 1);
+        expect(tst.onMount()).toStrictEqual(1);
+        expect(t2.onMount()).toStrictEqual(1);
     })
 })
 
@@ -265,6 +337,17 @@ describe('sharedData remains when one Component umounts', () => {
         expect(tst.state).not.toBe('one');
         expect(t2.state).toStrictEqual('one');
     })
+    test("Svelte", () => {
+        setcfg({framework: 'Svelte'});
+        const tst = new Test(1);
+        const t2 = new T2(1);
+        set('newval', 1);
+        tst.onDestroy();
+        expect(t2.onMount()).toStrictEqual(1);
+        set('newval', 2);
+        expect(t2.onMount()).toStrictEqual(2);
+        expect(tst.onMount()).not.toBe(2);
+    })
 })
 
 describe('sharedData set by setcfg', () => {
@@ -296,4 +379,8 @@ describe('sharedData set by setcfg', () => {
         expect(t3.state).toStrictEqual('new');
         expect(t4.state).toStrictEqual('new');
     })
+    test("Svelte N/A", () => {
+    })
 })
+/*
+*/

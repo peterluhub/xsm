@@ -4,7 +4,8 @@ let sharedState = {};
 let sublist = new Map();
 let debug=false;
 let trace=false;
-let fwsetstate, fwinitstate, fwumount, fwcname;
+
+let fwsetstate, fwinitstate, fwumount, fwcname, thisless, debugTrace;
 
 function initstate(self, key, val) {
     let v = get(key);
@@ -14,6 +15,16 @@ function initstate(self, key, val) {
     } else {
         self[key] = v;
     }
+}
+
+export function setTrace(val) {
+    trace = val;
+    debugTrace = debug || trace;
+}
+
+export function setDebug(val) {
+    debug = val;
+    debugTrace = debug || trace;
 }
 
 function printinfo(self, key=null, val=null) {
@@ -34,7 +45,7 @@ const frameworkcfg = {
         umount: 'componentWillUnmount',
         setstate: self => (key, val) => {
             self[key] = val;
-            if( debug || trace )
+            if( debugTrace )
                 printinfo(self, key, val);
             self.forceUpdate();
             return self;
@@ -46,7 +57,7 @@ const frameworkcfg = {
         umount: 'destroyed',
         setstate: self => (key, val) => {
             self[key] = val;
-            if( debug || trace )
+            if( debugTrace )
                 printinfo(self, key, val);
             return self.$forceUpdate();
         },
@@ -57,11 +68,21 @@ const frameworkcfg = {
         umount: 'ngOnDestroy',
         setstate: self => (key, val) => {
                 self[key] = val;
-                if( debug || trace )
+                if( debugTrace )
                     printinfo(self, key, val);
         },
         initstate,
         cname: self => self.constructor.name,
+    },
+    Svelte: {
+        umount: null,
+        setstate: self => (key, val) => {
+                self[key](val);
+                if( debugTrace )
+                    printinfo(self, key, val);
+        },
+        initstate: () => null,
+        cname: self => '',
     },
 };
 
@@ -103,7 +124,7 @@ export function set(key, val) {
         }
     }
     _data[key] = val;
-    if( debug || trace )
+    if( (debugTrace) && !cblst )
         printinfo(null, key, val);
 }
 
@@ -117,29 +138,58 @@ export function get(key) {
     return _data[key];
 }
 
+export function unbindState(bindings) {
+    return rmStateBinding(bindings);
+}
+
 function rmStateBinding(self, opt) {
     let map;
-    if( opt )
-        map  = opt;
-    else if( config.bindings )
-        map  = config.bindings[fwcname(self)];
-    else
-        return;
+    
+    if( thisless ) {
+        if( !self && opt ) {
+            map = opt;
+            self = opt;
+        } else if( self && arguments.length === 1 ) {
+            map = self;
+        } else {
+            console.log('no binding');
+            return;
+        }
+    } else {
+        if( opt )
+            map  = opt;
+        else if( config.bindings )
+            map  = config.bindings[fwcname(self)];
+        else
+            return;
+    }
     Object.keys(map).forEach(key => {
-        if( debug || trace )
-            printinfo(self, key, 'removing key');
+        if( debugTrace )
+            printinfo('removing key', key, 'from', self);
         rmsub(self, key);
     });
 }
 
 export function bindState(self, opt) {
     let map;
-    if( opt )
-        map  = opt;
-    else if( config.bindings )
-        map  = config.bindings[fwcname(self)];
-    else
-        return;
+    if( thisless ) {
+        if( !self && opt ) {
+            map = opt;
+            self = opt;
+        } else if( arguments.length === 1 ) {
+            map = self;
+        } else {
+            console.trace('no binding self=', self, 'opt=', opt, 'arguments.length', arguments.length);
+            return;
+        }
+    } else {
+        if( opt )
+            map  = opt;
+        else if( config.bindings )
+            map  = config.bindings[fwcname(self)];
+        else
+            return;
+    }
     let id, statecb;
     let frameworkcb =  fwsetstate(self);
     Object.keys(map).forEach(key => {
@@ -157,9 +207,11 @@ export function bindState(self, opt) {
                 return umount();
             };
         } else {
-            self[fwumount] = function classDestroy() {
-                rmStateBinding(self, map);
-            };
+            if( !thisless ) {
+                self[fwumount] = function classDestroy() {
+                    rmStateBinding(self, map);
+                };
+            }
         }
     } else {
         console.log('default framework is none');
@@ -196,7 +248,7 @@ function setSharedState(bindings) {
             sharedState[key] = true;
         }
     });
-    if( debug )
+    if( debugTrace )
         printinfo(null, 'sharedState', sharedState);
 }
 
@@ -208,6 +260,10 @@ export function setup(opt) {
         config[key] = val;
         
         if( key === 'framework' ) {
+            if( opt[key] === 'Svelte' )
+                thisless = true;
+            else
+                thisless = false;
             fwinitstate = frameworkcfg[val].initstate;
             fwsetstate = frameworkcfg[val].setstate;
             fwumount = frameworkcfg[val].umount;
@@ -217,10 +273,10 @@ export function setup(opt) {
         } else if( key === 'sharedBindings' ) {
             addSharedState(val)
         } else if( key === 'trace' ) {
-            usm.trace(val)
+            setTrace(val)
             trace = val;
         } else if( key === 'debug' ) {
-            usm.debug(val)
+            setDebug(val)
             debug = val;
         } else {
             console.log('not supported option ', key);
@@ -239,8 +295,8 @@ const usm = {
   rmsub,
   addsub,
   bindState,
-  debug: val => debug=val,
-  trace: val => trace=val,
+  setDebug, 
+  setTrace,
 };
 
 export default usm;

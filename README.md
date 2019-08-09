@@ -11,12 +11,12 @@
   </a>
 </p>
 
-> XSM - State Management made eXtraordinarily simple and effective for Angular, React, and Vue
+> XSM - State Management made eXtraordinarily simple and effective for Angular, React, Vue, and Svelte.
 
 ### 🏠 [Homepage](https://github.com/peterluhub/usm)
 
 ### Demos
-[Angular](https://codesandbox.io/s/angular-xsm-demo-1j9j0)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [React](https://codesandbox.io/s/xsm-react-3v3fg)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [Vue](https://codesandbox.io/s/vuexsmdemo-2152h)
+[Angular](https://codesandbox.io/s/angular-xsm-demo-1j9j0)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [React](https://codesandbox.io/s/xsm-react-3v3fg)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [Svelte](https://codesandbox.io/s/svelte-xsm-x4o6r)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [Vue](https://codesandbox.io/s/vuexsmdemo-2152h)
 
 [Realworld Example App with react-xsm](https://codesandbox.io/s/realworld-example-app-with-react-xsm-xelx1)
 ### Highlights
@@ -26,11 +26,11 @@
   -   Automatic re-rendering and state data removal, efficient memory management
   -   Small size for fast download
   -   Super simple async handling
-  -   Same API for Angular, React, and Vue, code reuse
+  -   Same API for Angular, React, Vue, and Svelte, code reuse
 
 ### Benchmark Results
 XSM is performant according to Stefan Krause's [js-framework-benchmark](https://github.com/krausest/js-framework-benchmark).  As shown below,
- ![Benchmarks](/docs/jfb-Interactive-Results-m.png).
+ ![Benchmarks](/docs/jfb-benchmarks.png).
 
 The code for the benchmarks is in [this repo](https://github.com/peterluhub/jfb).
 
@@ -76,13 +76,19 @@ Both debug and trace can be selectively turn on and off at any point
 
 ### Why XSM
 
-To answer why, let's start by answering another question, what is XSM?  It consists of a global store and the machinary to re-render the component when the state is updated.  The store is just a javascript object with key and value pairs.  By binding the instance reference, *this*, to the store, each component can react to the changes of the store whether it is re-render or unmount.  It is really *this* simple, no need to use HOC, provider, reducer, decorator, observer, action, dispatcher, etc.  Hence, all the three most popular frameworks work the same way in XSM and that's why we can keep the code size very small and support the three frameworks without framework specific modules.  
+To answer why, let's start by answering another question, what is XSM?  It consists of a global store and the machinary to re-render the component when the state is updated.  The store is just a javascript object with key and value pairs.  By binding the instance reference, *this*, to the store, each component can react to the changes of the store whether it is re-render or unmount.  It is really *this* simple, no need to use HOC, provider, reducer, decorator, observer, action, dispatcher, etc.  Hence, all the three most popular frameworks work the same way in XSM and that's why we can keep the code size very small and support the three frameworks without framework specific modules.  Svelte is very different from other frameworks.  It is *this* less.  The state object becomes *this*. 
 
 ### API
 
-**bindState** - binds a component's *this* and optionally state to the store.  The state is an object with key and value pairs.
+**bindState** - binds a component's *this* and optionally state to the store.  The state is an object with key and value pairs. For Svelte, the value is a fuction that wraps the assignment of the value.
 ```javascript
- bindState(this, state)
+ bindState(this, state) //Angular, React, Vue
+ bindState(state) //Svelte is this less, state is {key: val => stateVariable = val}
+```
+
+**unbindState** - If a component is mounted and unmounted repeatedly, you need to unbind the component state from the store when the component unmounts to prevent memory leak.  This is needed for Svelte only.  The unbinding is done aotumatically with the other frameworks by XSM.
+```javascript
+ unbindState(state) //Svelte only
 ```
 
 **get** - gets the value of a given key from the store.
@@ -112,17 +118,19 @@ To answer why, let's start by answering another question, what is XSM?  It consi
     }
  )
 ```
--   frameworkValue: Angular, React, or Vue
--   ComponentName: It is the class name for React and Angular.  It is the registered component name for Vue
--   bindings: It serves two purposes.  One is to bind the state of each component to the store and you don't need to binState in this case.  Another is to tell XSM that which piece of data is shared by more than one components and the shared data will not be deleted even if the the components are unmounted.
+-   frameworkValue: Angular, React, Vue, or Svelte
+-   ComponentName: It is the class name for React and Angular.  It is the registered component name for Vue.  Does not apply to Svelte.
+-   bindings: It serves two purposes.  One is to bind the state of each component to the store and you don't need to binState in this case.  Another is to tell XSM that which piece of data is shared by more than one components and the shared data will not be deleted even if the the components are unmounted.  Does not apply to Svelte.
 
 **setcfg** - It is an alias of *setup*.
+
+
 
 ## User Guide
 
 To use XSM to manage you app state, here are the steps to follow:
 
-- Use *setup* to bind XSM to a framework.  Currently, XSM supports Angular, Reatc, and Vue.
+- Use *setup* to bind XSM to a framework.  Currently, XSM supports Angular, Reatc, Vue, and Svelte.
 - Bind the component state to the store with *bindState* to enble the auto re-rendering when the state is updated.  The value of each bound key can be accessed in the component with *this.keyname*.  For example, you want to bind a key and value pair of {title: 'XSM'} to a component,
 - For Angular and React, it is done in the constructor.
   ```javascript
@@ -136,6 +144,14 @@ To use XSM to manage you app state, here are the steps to follow:
   created() {
       bindState(this, {title: 'XSM'})
   }
+  ```
+- For Svelte, it can be done inside the script tag of a component.
+  ```javascript
+  let title;
+  let bindings = {title: val => title = val};
+  bindState(bindings);
+  //if needed
+  onDestroy(() => unbindState(bindings));
   ```
 
 - When it's time to update the state, use *set* when and where your state data is available whether it's in the await function, promise.then callback, plain old callback, or anywhere in your code path. XSM does not get in the way.
@@ -154,7 +170,6 @@ Give a ⭐️ if this project helped you !
 
 ### 📝 License
 
-Copyright © 2019 [Peter Lu](https://github.com/peterluhub).<br />
 This project is [MIT](https://github.com/peterluhub/usm/blob/master/LICENSE) licensed.
 
 ***

@@ -1,5 +1,4 @@
  ![XSM](/docs/xsmlogo.png)
-[![Build Status](https://travis-ci.com/peterluhub/xsm.svg?branch=master)](https://travis-ci.com/peterluhub/xsm)
 <p>
   <a href="https://bundlephobia.com/result?p=xsm">
     <img src="https://flat.badgen.net/bundlephobia/minzip/xsm" alt="Minified + gzip package size for xsm in KB">

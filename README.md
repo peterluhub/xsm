@@ -1,7 +1,11 @@
  ![XSM](/docs/xsmlogo.png)
+[![Build Status](https://travis-ci.com/peterluhub/xsm.svg?branch=master)](https://travis-ci.com/peterluhub/xsm)
 <p>
   <a href="https://bundlephobia.com/result?p=xsm">
     <img src="https://flat.badgen.net/bundlephobia/minzip/xsm" alt="Minified + gzip package size for xsm in KB">
+  </a>
+  <a href="https://travis-ci.com/peterluhub/xsm">
+    <img src="https://travis-ci.com/peterluhub/xsm.svg?branch=master" alt="Build Status">
   </a>
   <a href="https://www.npmjs.com/package/xsm">
     <img src="https://img.shields.io/npm/v/xsm.svg" alt="npm version">

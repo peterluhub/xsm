@@ -1,5 +1,8 @@
  ![XSM](/docs/xsmlogo.png)
 <p>
+  <a href="https://bundlephobia.com/result?p=xsm">
+    <img src="https://flat.badgen.net/bundlephobia/minzip/xsm" alt="Minified + gzip package size for xsm in KB">
+  </a>
   <a href="https://www.npmjs.com/package/xsm">
     <img src="https://img.shields.io/npm/v/xsm.svg" alt="npm version">
   </a>

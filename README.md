@@ -28,11 +28,64 @@
 ### Highlights
 
   -   Incredibly easy to use, developer friendly and minimum learning curve
-  -   Reactive, nonintrusive
+  -   Reactive, unintrusive
   -   Automatic re-rendering and state data removal, efficient memory management
-  -   Small size for fast download
   -   Super simple async handling
-  -   Same API for Angular, React, Vue, and Svelte, code reuse
+  -   Same API for Angular, React, Vue, and Svelte, code reuse, framework agnostic
+  -   Small size for fast download, no framework specific plugins needed.
+
+<table border="0">
+    <thead>
+        <tr>
+            <th>Library</th>
+            <th>Minzipped Size</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>XSM</td>
+            <td>
+                <img src="https://flat.badgen.net/bundlephobia/minzip/xsm" alt="Minified + gzip package size for xsm in KB">
+            </td>
+        </tr>
+        <tr>
+            <td>Redux</td>
+            <td>
+                <img src="https://flat.badgen.net/bundlephobia/minzip/redux" alt="Minified + gzip package size for redux in KB" class="badge--in-table">
+            </td>
+        </tr>
+        <tr>
+            <td>react-Redux</td>
+            <td>
+                <img src="https://flat.badgen.net/bundlephobia/minzip/react-redux" alt="Minified + gzip package size for react-redux in KB" class="badge--in-table">
+            </td>
+        </tr>
+        <tr>
+            <td>mobx</td>
+            <td>
+                <img src="https://flat.badgen.net/bundlephobia/minzip/mobx" alt="Minified + gzip package size for mobx in KB" class="badge--in-table">
+            </td>
+        </tr>
+        <tr>
+            <td>mobx-react</td>
+            <td>
+                <img src="https://flat.badgen.net/bundlephobia/minzip/mobx-react" alt="Minified + gzip package size for mobx-react in KB" class="badge--in-table">
+            </td>
+        </tr>
+        <tr>
+            <td>Vuex</td>
+            <td>
+                <img src="https://flat.badgen.net/bundlephobia/minzip/vuex" alt="Minified + gzip package size for vuex in KB" class="badge--in-table">
+            </td>
+        </tr>
+        <tr>
+            <td>RXJS</td>
+            <td>
+                <img src="https://flat.badgen.net/bundlephobia/minzip/rxjs" alt="Minified + gzip package size for rxjs in KB" class="badge--in-table">
+            </td>
+        </tr>
+    <tbody>
+</table>
 
 ### Benchmark Results
 XSM is performant according to Stefan Krause's [js-framework-benchmark](https://github.com/krausest/js-framework-benchmark).  As shown below,

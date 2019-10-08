@@ -215,7 +215,7 @@ To use XSM to manage you app state, here are the steps to follow:
 
 - When it's time to update the state, use *set* when and where your state data is available whether it's in the await function, promise.then callback, plain old callback, or anywhere in your code path. XSM does not get in the way.
 
-- Besides the demos, you can find more code examples in [this repository](https://github.com/peterluhub/xsm-code-examples).  A realworld example(implementing the [Realworld Example Specs](https://github.com/gothinkster/realworld) using XSM with React is in [this repo](https://github.com/peterluhub/realworld-example).  Angular and Vue verions will be implemented soon.
+- Besides the demos, you can find more code examples in [this repository](https://github.com/peterluhub/xsm-code-examples).  A realworld example(implementing the [Realworld Example Specs](https://github.com/gothinkster/realworld) using XSM with React is in [this repo](https://github.com/peterluhub/realworld-example).  Angular and Vue versions will be implemented soon.
 
 ## Author
 

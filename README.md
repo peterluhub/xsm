@@ -162,15 +162,15 @@ To answer why, let's start by answering another question, what is XSM?  It consi
 
 **setMany** - updates the store for the given key and value pairs and re-renders the component(s).
 ```javascript
- setMany({key1: value1, key2, value2, ...})
+ setMany({key1: value1, key2: value2, ...})
 ```
 
 **setup** - It takes an object as an argument and is used for telling XSM which framework you app uses and optionally for binding the state of all components of the app to the store as well as turning the debug and trace on and off.
 ```javascript
  setup(
     {framework: frameworkValue, 
-     bindings: {ComponentName: {key1: value1,...},
-             ComponentName1: {key1: value1,...},
+     bindings: {ComponentName: {key1: value1, ...},
+             ComponentName1: {key1: value1, ...},
             ...},
      debug: true/false,
      trace: true/false
